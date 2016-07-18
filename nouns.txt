@@ -1,0 +1,169 @@
+acracy 	government by none; anarchy
+adhocracy 	government in an unstructured fashion; an unstructured organization
+albocracy 	government by white people
+anarchy 	government by none
+androcracy 	government by men
+anemocracy 	government by the wind or by whim
+angelocracy 	government by angels
+antarchy 	opposition to government; anarchy
+argentocracy 	government by money
+aristarchy 	government by the best
+aristocracy 	government by the nobility
+arithmocracy 	government by simple majority
+autarchy 	government by an absolute ruler
+autocracy 	government by one individual
+barbarocracy 	government by barbarians
+beerocracy 	government by brewers or brewing interests
+bestiocracy 	rule by beasts
+biarchy 	government by two people; diarchy
+binarchy 	government by two people; diarchy
+bureaucracy 	government by civil servants
+cannonarchy 	government by superior firepower or by cannons
+capelocracy 	government by shopkeepers
+chiliarchy 	government by one thousand people
+chirocracy 	government by physical force
+chromatocracy 	government by rulers of a particular skin colour
+chrysoaristocracy 	government by the wealthy; plutocracy
+chrysocracy 	government by the wealthy; plutocracy
+corpocracy 	government by corporate bureaucrats
+cosmarchy 	rulership over the entire world, esp. by the devil
+cottonocracy 	government by those involved in the cotton trade
+cryptarchy 	secret rulership
+decadarchy 	government by ten individuals; decarchy
+decarchy 	government by ten individuals
+demarchy 	government by the people; popular government
+democracy 	government by the people
+demonarchy 	government by a demon
+demonocracy 	government by demons or evil forces
+despotocracy 	government by despots or tyrants
+diabolocracy 	government by the Devil
+diarchy 	government by two people
+dinarchy 	government by two people; diarchy
+dodecarchy 	government by twelve people
+doulocracy 	government by slaves
+duarchy 	government by two people; diarchy
+dulocracy 	government by slaves; doulocracy
+dyarchy 	government by two people; diarchy
+ecclesiarchy 	government by clerics or ecclesiastical authorities
+endarchy 	centralised government
+ergatocracy 	government by the workers or the working class
+ethnarchy 	government over an ethnic group
+ethnocracy 	government by an ethnic group or race
+exarchy 	government by bishops
+foolocracy 	government by fools
+gerontocracy 	government by the aged
+gunarchy 	government by women; gynarchy
+gymnasiarchy 	government over a school or academy
+gynaecocracy 	government by women; gynarchy
+gynarchy 	government by women
+gynocracy 	government by women; gynarchy
+hagiarchy 	government by saints or holy persons
+hagiocracy 	government by holy men
+hamarchy 	government by a cooperative body of parts
+hecatarchy 	government by one hundred people; hecatontarchy
+hecatontarchy 	government by one hundred people
+hendecarchy 	government by eleven people
+heptarchy 	government by seven people
+heroarchy 	government by heroes
+hetaerocracy 	government by paramours
+heterarchy 	government by a foreign ruler
+hierarchy 	government by a ranked body; government by priests
+hierocracy 	government by priests or religious ministers
+hipparchy 	rule or control of horses
+hoplarchy 	government by the military
+hyperanarchy 	condition of extreme anarchy
+hyperarchy 	excessive government
+iatrarchy 	government by physicians
+idiocracy 	personal rule; self-rule
+infantocracy 	government by an infant
+isocracy 	equal political power
+jesuitocracy 	government by Jesuits
+juntocracy 	government by a junta
+kakistocracy 	government by the worst
+kleptocracy 	government by thieves
+kritarchy 	government by judges
+landocracy 	government by the propertied class; timocracy
+logocracy 	government of words
+matriarchy 	government by women or mothers
+meritocracy 	government by the meritorious
+merocracy 	government by a part of the citizenry
+mesocracy 	government by the middle classes
+metrocracy 	government by mothers or women; matriarchy
+millionocracy 	government by millionaires
+millocracy 	government by mill owners
+mobocracy 	government by mobs or crowds
+monarchy 	government by one individual
+moneyocracy 	government by the monied classes
+monocracy 	government by one individual
+myriarchy 	government by ten thousand individuals
+narcokleptocracy 	government by those who profit from trade in illegal drugs
+navarchy 	rulership over the seas
+neocracy 	government by new or inexperienced rulers
+nomocracy 	government based on legal system; rule of law
+ochlocracy 	government by mobs
+octarchy 	government by eight people
+oligarchy 	government by the few
+paedarchy 	government by children
+paedocracy 	government by children; paedarchy
+panarchy 	universal rule or dominion
+pantarchy 	government by all the people; world government
+pantisocracy 	government by all equally
+paparchy 	government by the pope
+papyrocracy 	government by newspapers or literature
+parsonarchy 	government by parsons
+partocracy 	government by a single unopposed political party
+patriarchy 	government by men or fathers
+pedantocracy 	government by pedants or strict rule-bound scholars
+pentarchy 	government by five individuals
+phallocracy 	government by men
+philosophocracy 	government by philosophers
+phylarchy 	government by a specific class or tribe
+physiocracy 	government according to natural laws or principles
+pigmentocracy 	government by those of one skin colour
+plantocracy 	government by plantation owners
+plousiocracy 	government by the wealthy; plutocracy
+plutarchy 	government by the wealthy; plutocracy
+plutocracy 	government by the wealthy
+polarchy 	government by many people; polyarchy
+policeocracy 	government by police
+pollarchy 	government by the multitude or a mob; ochlocracy
+polyarchy 	government by many people
+polycracy 	government by many rulers; polyarchy
+popocracy 	government by populists
+pornocracy 	government by harlots
+prophetocracy 	government by a prophet
+psephocracy 	government resulting from election by ballot
+ptochocracy 	government by beggars or paupers; wholesale pauperization
+punditocracy 	government by political pundits
+quangocracy 	rule of quasi-autonomous non-governmental organizations
+rotocracy 	government by those who control rotten boroughs
+septarchy 	government by seven rulers; heptarchy
+shopocracy 	government by shopkeepers
+slavocracy 	government by slave-owners
+snobocracy 	government by snobs
+sociocracy 	government by society as a whole
+squarsonocracy 	government by landholding clergymen
+squatterarchy 	government by squatters; squattocracy
+squattocracy 	government by squatters
+squirearchy 	government by squires
+squirocracy 	government by squires; squirearchy
+statocracy 	government by the state alone, without ecclesiastical influence
+stratarchy 	rulership over an army
+stratocracy 	military rule or despotism
+strumpetocracy 	government by strumpets
+synarchy 	joint sovereignty
+technocracy 	government by technical experts
+tetradarchy 	government by four people; tetrarchy
+tetrarchy 	government by four people
+thalassiarchy 	sovereignty of the seas; thalassocracy
+thalassocracy 	sovereignty of the seas
+thearchy 	rule by a god or gods; body of divine rulers
+theatrocracy 	goverment by gathered assemblies of citizens
+theocracy 	government by priests or by religious law
+timarchy 	government by the propertied class; timocracy
+timocracy 	government by the propertied class
+triarchy 	government by three people
+tritarchy 	government by three people; triarchy
+tritheocracy 	government by three gods
+whiggarchy 	government by Whigs
+xenocracy 	government by a body of foreigners
