@@ -1,6 +1,30 @@
 __author__ = 'lordminx'
 
 from onerollengine import Roll
+from textwrap import dedent
+from random import choice
+
+
+class Corpus:
+    def __init__(self):
+        self.nouns = self.loadwordfile("nouns.txt")
+        self.adjectives = self.loadwordfile("adjectives.txt")
+
+    @property
+    def noun(self):
+        return choice(self.nouns)
+
+    @property
+    def adjective(self):
+        return choice(self.adjectives)
+
+    @staticmethod
+    def loadwordfile(filename):
+        words = []
+        with open(filename, "r") as f:
+            for line in f:
+                words.append(line.split()[0])
+        return words
 
 
 class Company:
@@ -8,16 +32,33 @@ class Company:
     def __init__(self, name, stats=(0, 0, 0, 0, 0), assets=[]):
         self.name = name
 
-        self.might = stats[0]
-        self.influence = stats[1]
+        self.influence = stats[0]
+        self.might = stats[1]
         self.sovereignty = stats[2]
-        self.treasure = stats[3]
-        self.territory = stats[4]
+        self.territory = stats[3]
+        self.treasure = stats[4]
 
         self.assets = assets
 
+        self.roll = None
+
+    def __repr__(self):
+        return "Company(name={p.name}".format(p=self)
+
     def __str__(self):
-        return "{}({}-{}-{}-{}-{})\nAssets: {}".format(self.name, self.might, self.influence, self.sovereignty, self.territory, self.treasure, self.assets)
+        stringrep = """\
+                    {c.name}:
+
+                    Influence: {c.influence}
+                    Might: {c.might}
+                    Sovereignty: {c.sovereignty}
+                    Territory: {c.territory}
+                    Treasure: {c.treasure}
+
+                    Assets: {c.assets}"""
+
+        return dedent(stringrep).format(c=self)
+
 
 ORC_table = {
     1: {
@@ -104,11 +145,11 @@ ORC_table = {
 
 
 def onerollcompany(name="OneRollCompany", dice=15):
+
+    company = Company(name, (0, 0, 1, 0, 0))
     roll = Roll(dice, over10=True)
-    print(roll.dice)
 
-    company = Company(name)
-
+    company.roll = roll
     results = []
 
     # get Match results
@@ -124,15 +165,25 @@ def onerollcompany(name="OneRollCompany", dice=15):
     for res in results:
         for i in res:
             if type(i) == str:
-                print(i)
+                pass  # maybe do something useful with those strings
             else:
                 if type(i[1]) == str:
                     company.assets.append(i[1])
                 else:
                     setattr(company, i[0], getattr(company, i[0]) + i[1])
+    return company
 
-    print(company)
+
+def randomname():
+    foo = Corpus()
+    adjective = foo.adjective.capitalize()
+    noun = foo.noun.capitalize()
+
+    return "The {} {}".format(adjective, noun)
+
+
 
 
 if __name__ == "__main__":
-    onerollcompany()
+    for x in range(20):
+        print(randomname())
