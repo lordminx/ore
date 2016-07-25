@@ -26,6 +26,10 @@ class Corpus:
                 words.append(line.split()[0])
         return words
 
+    def randomname(self):
+
+        return "The {} {}".format(self.adjective, self.noun.capitalize())
+
 
 class Company:
 
@@ -174,16 +178,7 @@ def onerollcompany(name="OneRollCompany", dice=15):
     return company
 
 
-def randomname():
-    foo = Corpus()
-    adjective = foo.adjective.capitalize()
-    noun = foo.noun.capitalize()
-
-    return "The {} {}".format(adjective, noun)
-
-
-
-
 if __name__ == "__main__":
+    foo = Corpus()
     for x in range(20):
-        print(randomname())
+        print(foo.randomname())

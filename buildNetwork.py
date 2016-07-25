@@ -11,8 +11,9 @@ def hassolitarynodes(g):
 
 
 network = MultiGraph()
+corpus = Corpus()
 
-randComp = [onerollcompany(randomname(), random.randint(5, 15)) for x in range(30)]
+randComp = [onerollcompany(corpus.randomname(), random.randint(5, 15)) for x in range(30)]
 
 print("Companies:", len(randComp))
 
