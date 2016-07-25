@@ -13,14 +13,25 @@ def hassolitarynodes(g):
 network = MultiGraph()
 corpus = Corpus()
 
+
+# generate 30 random companies
 randComp = [onerollcompany(corpus.randomname(), random.randint(5, 15)) for x in range(30)]
 
-print("Companies:", len(randComp))
 
-network.add_nodes_from(randComp)
+# add Companies as nodes to graph
+for comp in randComp:
+    if len(network) == 0:
+        network.add_node(comp)
+    else:
+        network.add_edge(choice(network.nodes()), comp)
 
-while hassolitarynodes(network):
-    network.add_edge(random.choice(network.nodes()), random.choice(network.nodes()))
+
+# throw some random connections into the mix
+for x in range(5):
+    network.add_edge(choice(network.nodes()), choice(network.nodes()))
+
+
+
 
 draw(network, labels={node: node.name for node in network})
 show()
