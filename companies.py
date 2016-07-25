@@ -42,7 +42,7 @@ class Company:
         self.territory = stats[3]
         self.treasure = stats[4]
 
-        self.assets = assets
+        self.assets = list(assets)
 
         self.roll = None
 
@@ -165,14 +165,16 @@ def onerollcompany(name="OneRollCompany", dice=15):
 
     # get Waste Die results
     results += [ORC_table[die][1] for die in roll.waste]
-
+    print("Processing Results")
     for res in results:
         for i in res:
             if type(i) == str:
                 pass  # maybe do something useful with those strings
             else:
                 if type(i[1]) == str:
+                    print(i)
                     company.assets.append(i[1])
+                    print(len(company.assets))
                 else:
                     setattr(company, i[0], getattr(company, i[0]) + i[1])
     return company
@@ -181,4 +183,4 @@ def onerollcompany(name="OneRollCompany", dice=15):
 if __name__ == "__main__":
     foo = Corpus()
     for x in range(20):
-        print(foo.randomname())
+        print(onerollcompany())

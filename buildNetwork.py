@@ -31,9 +31,13 @@ for x in range(5):
     network.add_edge(choice(network.nodes()), choice(network.nodes()))
 
 
+# Betweenness centrality for trade centers?
+for x, y in sorted(list(betweenness_centrality(network).items()), key=lambda x: x[1], reverse=True)[:5]:
+    print(x)
+    print(y)
 
 
-draw(network, labels={node: node.name for node in network})
-show()
+#draw(network, labels={node: node.name for node in network})
+#show()
 
 
