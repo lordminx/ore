@@ -46,6 +46,15 @@ class Company:
 
         self.roll = None
 
+    @property
+    def size(self):
+        _stats = ["influence", "might", "sovereignty", "territory", "treasure"]
+
+        _size = sum([getattr(self, x) for x in _stats])
+        _size += len(self.assets)
+
+        return _size
+
     def __repr__(self):
         return "Company(name={p.name}".format(p=self)
 
