@@ -8,11 +8,16 @@ class Match(namedtuple("Match", ["width", "height"])):
 
     def __str__(self):
         return "{}x{}".format(self[0], self[1])
+
     __repr__ = __str__
 
 
 class Roll:
-    def __init__(self, x, penalty=0, over10=False,):
+
+    def __init__(self, x, penalty=0, over10=False, limit_width=False):
+        self.over10 = over10
+        self.limit_width = limit_width
+
         x -= penalty
 
         if not over10 and x > 10:
@@ -21,6 +26,12 @@ class Roll:
 
         self.dice = [random.randint(1, 10) for y in range(x)]
         self.dice.sort()
+
+        if limit_width:
+            while self.widest[0] > 5:
+                print("Set {} too wide, rerolling...".format(self.widest))
+                index = self.dice.index(self.widest[1])
+                self.reroll(index)
 
     @property
     def matches(self):
@@ -53,6 +64,16 @@ class Roll:
             return _widest
         else:
             return ()
+
+    def reroll(self, index):
+        try:
+            self.dice[index] = random.randint(1, 10)
+        except IndexError as e:
+            print("No die at index")
+            raise e
+
+    def reroll_all(self):
+        self.dice = Roll(len(self.dice), over10=self.over10, limit_width=self.limit_width).dice
 
 
 class Contest:
@@ -119,40 +140,19 @@ def roll(dice):
 
 
 def roll_with_md(dice):
-    pass
+    _roll = Roll(dice)
+    print("You rolled:", _roll.dice)
+    if _roll.matches:
+        print("Matches:", _roll.matches)
+    md = int(input("What number do you want to set your Master Die to? "))
+    _roll.dice.append(md)
+    _roll.dice.sort()
+    return _roll
 
 
 def roll_with_ed(dice):
     pass
 
 
-
-
-
-
-
 if __name__ == "__main__":
-    print("Rolling...")
-    foo = Roll(12)
-
-    print("Matches:", foo.matches)
-    print("Waste Dice;", foo.waste)
-    print("Dice Roll:", foo.dice)
-    print("highest:", foo.highest)
-    print("widest:", foo.widest)
-
-    print("Roll against diff 5!")
-    print(Contest(foo, diff=5).result)
-
-    print("Dynamic Contest against 5 dice;")
-    bar = Roll(5)
-    print(bar.matches)
-    print(Contest(foo, bar).result)
-
-    Blub = Match(1, 2)
-    Blablub = Match(1, 2)
-    print(Blub == Blablub)
-
-    testdict = {}
-    testdict[Blub] = Blablub
-    print(testdict)
+    print(roll_with_md(10).matches)
