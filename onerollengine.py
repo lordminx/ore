@@ -133,6 +133,10 @@ def static_contest(roll, diff=1, penalty=0):
 
 
 def dynamic_contest(roll1, roll2, width_wins=False):
+
+    assert type(roll1) in (int, Roll), "Roll object or integer expected"
+    assert type(roll2) in (int, Roll), "Roll object or integer expected"
+
     if type(roll1) == int:
         roll1 = Roll(roll1)
 
@@ -164,6 +168,9 @@ def gobble_match(match, gobble):
         Match: Resulting Match after applying gobble dice, None if ruined completely.
         Gobble: Gobble object with remaining Gobble dice, None if all used up."""
 
+    assert type(match) == Match, "Match object expected"
+    assert type(gobble) == Gobble, "Gobble object expected."
+
     if match.width > gobble.width or match.height > gobble.height:
         return False, match, gobble
 
@@ -182,6 +189,8 @@ def gobble_match(match, gobble):
 
 def roll(dice):
     """Roll <dice> # of dice and return a Roll object."""
+    assert type(dice) == int, "Argument must be an integer."
+
     return Roll(dice)
 
 
@@ -223,3 +232,5 @@ if __name__ == "__main__":
     res, match, gobble = gobble_match(match, gobble)
 
     print(res, match, gobble)
+
+    dynamic_contest(2, "4")
