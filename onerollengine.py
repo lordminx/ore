@@ -3,6 +3,27 @@ from collections import Counter, namedtuple
 from operator import itemgetter
 
 
+class Gobble:
+    def __init__(self, w, h):
+        self.width = w
+        self.height = h
+        self.gobbles = [h] * w
+
+    def use(self):
+        return self.gobbles.pop()
+
+    pop = use
+
+    def __str__(self):
+        return str(self.gobbles)
+
+    def __bool__(self):
+        return bool(self.gobbles)
+
+    def __len__(self):
+        return len(self.gobbles)
+
+
 class Match(namedtuple("Match", ["width", "height"])):
     __slots__ = ()
 
@@ -10,6 +31,12 @@ class Match(namedtuple("Match", ["width", "height"])):
         return "{}x{}".format(self[0], self[1])
 
     __repr__ = __str__
+
+    def toGobble(self):
+        return Gobble(self.width, self.height)
+
+    def __bool__(self):
+        return self.width < 1
 
 
 class Roll:
@@ -125,14 +152,29 @@ def dynamic_contest(roll1, roll2, width_wins=False):
 
         return roll1.matches[-1][1] > roll2.matches[-1][1]
 
-def gobble(roll, highest=True):
-    if type(roll) == int:
-        roll = Roll(roll)
 
-    if roll.matches:
-        if highest:
-            roll.gobble = []
+def gobble_match(match, gobble):
+    """Function to ruin a Match with Gobble dice.
 
+    Returns a tuple of (Boolean, Match, Gobble):
+        Boolean: True if Gobble was both fast and high enough to know dice out of Match.
+        Match: Resulting Match after applying gobble dice, None if ruined completely.
+        Gobble: Gobble object with remaining Gobble dice, None if all used up."""
+
+    if match.width > gobble.width or match.height > gobble.height:
+        return False, match, gobble
+
+    while gobble or match:
+        match = Match(match.width -1, match.height)
+        gobble.pop()
+
+    if match.width <= 1:
+        match = None
+
+    if len(gobble) == 0:
+        gobble = None
+
+    return True, match, gobble
 
 
 def roll(dice):
@@ -155,4 +197,10 @@ def roll_with_ed(dice):
 
 
 if __name__ == "__main__":
-    print(roll_with_md(10).matches)
+    match = Match(3, 6)
+    gobble = Gobble(1, 7)
+    gobble.width = 3
+
+    res, match, gobble = gobble_match(match, gobble)
+
+    print(res, match, gobble)
