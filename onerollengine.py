@@ -136,6 +136,9 @@ def dynamic_contest(roll1, roll2, width_wins=False):
     if type(roll1) == int:
         roll1 = Roll(roll1)
 
+    if type(roll2) == int:
+        roll2 = Roll(roll2)
+
     if not roll1.matches:
 
         return False
@@ -178,22 +181,38 @@ def gobble_match(match, gobble):
 
 
 def roll(dice):
+    """Roll <dice> # of dice and return a Roll object."""
     return Roll(dice)
 
 
 def roll_with_md(dice):
+    """Roll <dice> # of dice and interactively add one Master Die. Returns Roll object."""
+
     _roll = Roll(dice)
     print("You rolled:", _roll.dice)
+
     if _roll.matches:
         print("Matches:", _roll.matches)
+
     md = int(input("What number do you want to set your Master Die to? "))
+
     _roll.dice.append(md)
     _roll.dice.sort()
+
     return _roll
 
 
-def roll_with_ed(dice):
-    pass
+def roll_with_ed(dice, ed=None):
+    """Roll <dice> # of dice and add a chosen Expert Die, returning a Roll object."""
+
+    if not ed:
+        ed = int(input("What number do you want to set your Expert Die to? "))
+
+    _roll = Roll(dice)
+    _roll.dice.append(ed)
+    _roll.dice.sort()
+
+    return _roll
 
 
 if __name__ == "__main__":
