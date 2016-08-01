@@ -1,8 +1,7 @@
-__author__ = 'lordminx'
-
 from onerollengine import Roll
 from textwrap import dedent
 from random import choice
+from collections import Counter
 
 
 class Corpus:
@@ -33,7 +32,7 @@ class Corpus:
 
 class Company:
 
-    def __init__(self, name, stats=(0, 0, 0, 0, 0), assets=[]):
+    def __init__(self, name="Some Company", stats=(0, 0, 1, 0, 0), assets=[]):
         self.name = name
 
         self.influence = stats[0]
@@ -43,6 +42,8 @@ class Company:
         self.treasure = stats[4]
 
         self.assets = list(assets)
+
+        self.used = Counter()
 
         self.roll = None
 
@@ -54,6 +55,10 @@ class Company:
         _size += len(self.assets)
 
         return _size
+
+    def refresh(self):
+        """Clear stat usage Counter """
+        self.used.clear()
 
     def __repr__(self):
         return "Company(name={p.name}".format(p=self)
@@ -71,6 +76,20 @@ class Company:
                     Assets: {c.assets}"""
 
         return dedent(stringrep).format(c=self)
+
+
+actions = {
+    "attack": (("might", "treasure"), ("might", "territory")),
+    "being informed": (("influence", "sovereignty"), ("influence", "treasure")),
+    "counter-espionage": (("influence", "territory"), ("influence", "treasure")),
+    "defend": (("might", "territory"), ("might", "treasure")),
+    "espionage": (("influence", "treasure"), ("influence", "sovereignty")),
+    "improve_sovereignty": (("territory", "treasure"), ()),
+    "policing": (("night", "sovereignty"), ("influence", "might")),
+    "improve_influence": (("sovereignty", "territory"), ()),
+    "improve_might": (("sovereignty", "territory"), ()),
+    "unconventional_warfare": (("influence", "might"), ("might", "sovereignty")),
+    }
 
 
 ORC_table = {
@@ -190,6 +209,4 @@ def onerollcompany(name="OneRollCompany", dice=15):
 
 
 if __name__ == "__main__":
-    foo = Corpus()
-    for x in range(20):
-        print(onerollcompany())
+    print(Company())
