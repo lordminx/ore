@@ -36,7 +36,7 @@ class Match(namedtuple("Match", ["width", "height"])):
         return Gobble(self.width, self.height)
 
     def __bool__(self):
-        return self.width < 1
+        return self.width > 1
 
 
 class Roll:
@@ -106,10 +106,10 @@ class Roll:
 class Contest:
 
     def __init__(self,
-                 desc="A ORE Contest",
                  roll1,
                  roll2=None,
-                 diff=1):
+                 diff=1,
+                 desc="A ORE Contest"):
 
         self.desc = desc
         self.result = ""
@@ -202,7 +202,7 @@ def gobble_match(match, gobble):
     if match.width > gobble.width or match.height > gobble.height:
         return False, match, gobble
 
-    while gobble or match:
+    while gobble and match:
         match = Match(match.width -1, match.height)
         gobble.pop()
 
@@ -254,11 +254,9 @@ def roll_with_ed(dice, ed=None):
 
 if __name__ == "__main__":
     match = Match(3, 6)
-    gobble = Gobble(1, 7)
+    gobble = Gobble(3, 7)
     gobble.width = 3
 
     res, match, gobble = gobble_match(match, gobble)
 
     print(res, match, gobble)
-
-    dynamic_contest(2, "4")
