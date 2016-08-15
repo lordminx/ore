@@ -31,6 +31,7 @@ class Corpus:
 
 
 class Company:
+    _stats = ["influence", "might", "sovereignty", "territory", "treasure"]
 
     def __init__(self, name="Some Company", stats=(0, 0, 1, 0, 0), assets=[]):
         self.name = name
@@ -49,12 +50,14 @@ class Company:
 
     @property
     def size(self):
-        _stats = ["influence", "might", "sovereignty", "territory", "treasure"]
-
         _size = sum([getattr(self, x) for x in _stats])
         _size += len(self.assets)
 
         return _size
+
+    @property
+    def stats(self):
+        return {stat:getattr(self, stat) for stat in Company._stats}
 
     def refresh(self):
         """Clear stat usage Counter """
@@ -85,7 +88,7 @@ actions = {
     "defend": (("might", "territory"), ("might", "treasure")),
     "espionage": (("influence", "treasure"), ("influence", "sovereignty")),
     "improve_sovereignty": (("territory", "treasure"), ()),
-    "policing": (("night", "sovereignty"), ("influence", "might")),
+    "policing": (("might", "sovereignty"), ("influence", "might")),
     "improve_influence": (("sovereignty", "territory"), ()),
     "improve_might": (("sovereignty", "territory"), ()),
     "unconventional_warfare": (("influence", "might"), ("might", "sovereignty")),
@@ -179,7 +182,7 @@ ORC_table = {
 def onerollcompany(name="OneRollCompany", dice=15):
 
     company = Company(name, (0, 0, 1, 0, 0))
-    roll = Roll(dice, over10=True)
+    roll = Roll(dice, over10=True, limit_width=True)
 
     company.roll = roll
     results = []

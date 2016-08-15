@@ -39,16 +39,20 @@ for x, y in sorted(list(betweenness_centrality(network).items()), key=lambda x: 
 # build directed relationship graph from network
 relationships = DiGraph()
 
+
 for x, y in network.edges():
-    # compare overall size
-    if x.size > y.size:
-        print("{x.name} dominates {y.name}".format(x=x, y=y))
-    elif x.size < y.size:
-        # y dominates x
-        print("{y.name} dominates {x.name}".format(x=x, y=y))
-    else:
-        # x and y eye each other warily because they are roughly eaqual in size
-        print("{x.name} and {y.name} eye each other warily.".format(x=x, y=y))
+    # compare actions
+    print("'{}' vs '{}'".format(x.name, y.name))
+    for k, v in actions.items():
+
+        if v[1]:
+            print(x.stats)
+            print(y.stats)
+            print(k, "{} vs {}".format(v[0], v[1]))
+            pool1 = sum([getattr(x, stat) for stat in v[0]])
+            pool2 = sum([getattr(y, stat) for stat in v[1]])
+
+            print("{} vs {}".format(pool1, pool2))
 
 
 #draw(network, labels={node: node.name for node in network})

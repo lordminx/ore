@@ -54,8 +54,8 @@ class Roll:
         self.dice = [random.randint(1, 10) for y in range(x)]
         self.dice.sort()
 
-        if limit_width:
-            while self.widest[0] > 5:
+        if limit_width and self.widest != ():
+            while self.widest.width > 5:
                 print("Set {} too wide, rerolling...".format(self.widest))
                 index = self.dice.index(self.widest[1])
                 self.reroll(index)
@@ -84,7 +84,7 @@ class Roll:
     @property
     def widest(self):
         if self.matches:
-            _widest = max(self.matches, key=itemgetter(0))\
+            _widest = max(self.matches, key=itemgetter(0))
 
             if _widest[0] == self.highest[0]:   # check if sets all have the same width
                 _widest = self.highest          # if yes: pick highest as "tiebreaker"
@@ -105,8 +105,15 @@ class Roll:
 
 class Contest:
 
-    def __init__(self, roll1, roll2=None, diff=1):
+    def __init__(self,
+                 desc="A ORE Contest",
+                 roll1,
+                 roll2=None,
+                 diff=1):
+
+        self.desc = desc
         self.result = ""
+        self.winner = None
 
         if not roll2:
             if static_contest(roll1, diff):
@@ -114,10 +121,28 @@ class Contest:
             else:
                 self.result = "Failure!"
         else:
-            if dynamic_contest(roll1, roll2):
+            self._res = dynamic_contest(roll1, roll2)
+
+            if self._res == None:
+
+                self.result = "Neither roll achieved a match."
+                self.winner = None
+
+            elif self._res:
+
                 self.result = "Roll 1 beats Roll 2!"
+                self.winner = roll1
+
             else:
                 self.result = "Roll 2 beats Roll 1!"
+                self.winner = roll2
+
+    @property
+    def winning_roll(self):
+        return self.winner
+
+
+
 
 
 def static_contest(roll, diff=1, penalty=0):
@@ -142,6 +167,9 @@ def dynamic_contest(roll1, roll2, width_wins=False):
 
     if type(roll2) == int:
         roll2 = Roll(roll2)
+
+    if not (roll1.matches or roll2.matches):
+        return None
 
     if not roll1.matches:
 
