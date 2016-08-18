@@ -1,7 +1,8 @@
-from onerollengine import Roll
-from textwrap import dedent
-from random import choice
 from collections import Counter
+from random import choice
+from textwrap import dedent
+
+from companies.onerollengine import Roll
 
 
 class Corpus:
@@ -58,6 +59,10 @@ class Company:
     @property
     def stats(self):
         return {stat:getattr(self, stat) for stat in Company._stats}
+
+    @property
+    def stats_tuple(self):
+        return tuple([getattr(self, stat) for stat in Company._stats])
 
     def refresh(self):
         """Clear stat usage Counter """
