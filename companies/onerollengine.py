@@ -38,27 +38,33 @@ class Match(namedtuple("Match", ["width", "height"])):
     def __bool__(self):
         return self.width > 1
 
-
 class Roll:
 
-    def __init__(self, x, penalty=0, over10=False, limit_width=False):
+    def __init__(self, x=4, penalty=0, over10=False, limit_width=False):
+        if type(x) not in [int, list]:
+            raise TypeError("Int or list expected but {} given.".format(type(x)))
+
         self.over10 = over10
         self.limit_width = limit_width
 
-        x -= penalty
+        if type(x) == list:
+            self.dice = sorted(x)
 
-        if not over10 and x > 10:
-            x = min(x, 10)
-            print("Too man dice! Only rolling 10.")
+        else:
+            x -= penalty
 
-        self.dice = [random.randint(1, 10) for y in range(x)]
-        self.dice.sort()
+            if not over10 and x > 10:
+                x = min(x, 10)
+                print("Too man dice! Only rolling 10.")
 
-        if limit_width and self.widest != ():
-            while self.widest.width > 5:
-                print("Set {} too wide, rerolling...".format(self.widest))
-                index = self.dice.index(self.widest[1])
-                self.reroll(index)
+            self.dice = [random.randint(1, 10) for y in range(x)]
+            self.dice.sort()
+
+            if limit_width and self.widest != ():
+                while self.widest.width > 5:
+                    print("Set {} too wide, rerolling...".format(self.widest))
+                    index = self.dice.index(self.widest[1])
+                    self.reroll(index)
 
     @property
     def matches(self):
@@ -93,6 +99,12 @@ class Roll:
             return ()
 
     def reroll(self, index):
+        """
+        Reroll the die at index.
+
+        :param index: Index of the die to be replaced by a new value.
+        :return: None
+        """
         try:
             self.dice[index] = random.randint(1, 10)
         except IndexError as e:
@@ -100,7 +112,39 @@ class Roll:
             raise e
 
     def reroll_all(self):
-        self.dice = Roll(len(self.dice), over10=self.over10, limit_width=self.limit_width).dice
+        number = len(self.dice)
+        self.dice = Roll(number,
+                         over10=self.over10,
+                         limit_width=self.limit_width
+                         ).dice
+
+    def __eq__(self, other):
+        return set(self.dice) == set(other.dice)
+
+    def __ne__(self, other):
+        return not self == other
+
+    def __add__(self, other):
+        try:
+            new_dice = self.dice + other.dice
+            over_10 = len(new_dice) > 10
+            limit_width = self.limit_width or other.limit_width
+
+            return Roll(new_dice, over10=over_10, limit_width=limit_width)
+        except AttributeError:
+            raise TypeError("Addition not possible between Types Roll and {}.".format(type(other)))
+
+    def __radd__(self, other):
+        if other == 0:
+            return self
+        else:
+            return self.__add__(other)
+
+    __iadd__ = __add__
+
+    def __len__(self):
+        return self.dice.__len__()
+
 
 
 class Contest:
@@ -189,9 +233,11 @@ def dynamic_contest(roll1, roll2, width_wins=False):
 
 
 def gobble_match(match, gobble):
-    """Function to ruin a Match with Gobble dice.
+    """Ruin a Match using Gobble dice.
 
-    Returns a tuple of (Boolean, Match, Gobble):
+    :param match: Match object to be gobbled.
+    :param gobble: Gobble object to be used against match.
+    :return: Tuple of (Boolean, Match, Gobble):
         Boolean: True if Gobble was both fast and high enough to know dice out of Match.
         Match: Resulting Match after applying gobble dice, None if ruined completely.
         Gobble: Gobble object with remaining Gobble dice, None if all used up."""
@@ -216,7 +262,13 @@ def gobble_match(match, gobble):
 
 
 def roll(dice):
-    """Roll <dice> # of dice and return a Roll object."""
+    """
+    Roll <dice> # of dice and return a Roll object.
+
+    :param dice: Number of Dice to be rolled.
+    :type: int
+    :return: Roll object.
+    """
     assert type(dice) == int, "Argument must be an integer."
 
     return Roll(dice)
