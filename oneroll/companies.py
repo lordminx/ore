@@ -2,7 +2,7 @@ from collections import Counter
 from random import choice
 from textwrap import dedent
 
-from companies.onerollengine import Roll
+from .core import Roll
 
 
 class Corpus:
@@ -51,7 +51,7 @@ class Company:
 
     @property
     def size(self):
-        _size = sum([getattr(self, x) for x in _stats])
+        _size = sum([getattr(self, x) for x in self._stats])
         _size += len(self.assets)
 
         return _size
@@ -217,4 +217,5 @@ def onerollcompany(name="OneRollCompany", dice=15):
 
 
 if __name__ == "__main__":
-    print(Company())
+    #print(Company()
+    pass

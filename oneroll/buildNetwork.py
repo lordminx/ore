@@ -1,7 +1,6 @@
 from networkx import *
-from companies import *
+from .companies import *
 import random
-from matplotlib.pyplot import show
 
 
 def hassolitarynodes(g):

@@ -1,6 +1,4 @@
 
-
-
 class Hex:
     def __init__(self, q, r,):
         self.q = q

@@ -32,7 +32,7 @@ class Match(namedtuple("Match", ["width", "height"])):
 
     __repr__ = __str__
 
-    def toGobble(self):
+    def to_gobble(self):
         return Gobble(self.width, self.height)
 
     def __bool__(self):
