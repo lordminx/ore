@@ -145,6 +145,12 @@ class Roll:
     def __len__(self):
         return self.dice.__len__()
 
+    def __repr__(self):
+        return "Roll(x={}, over10={}, limit_width={})".format(self.dice, self.over10, self.limit_width)
+
+    def __str__(self):
+        return str(self.matches + self.waste)
+
 
 
 class Contest:
