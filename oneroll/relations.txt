@@ -1,7 +1,0 @@
-"allies":
-A und B sind verbündet
-Kriterien: A.size ~= B.size, komplimentäre Stats, räumliche Nähe
-
-"rivals":
-A und B sind Konkurenten
-Kriterien: A.size ~= B.size, ähnliche Stats,
