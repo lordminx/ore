@@ -25,6 +25,19 @@ class Gobble:
 
 
 class Match(namedtuple("Match", ["width", "height"])):
+    """Class representing an ORE match.
+
+        >>> Match(3,7)
+        3x7
+        >>> match = Match(3,7)
+        >>> print(match.height)
+        7
+        >>> print(match.width)
+        3
+
+    :param width: Number of dice in Match
+    :param height: Die value of Match
+    """
     __slots__ = ()
 
     def __str__(self):
@@ -38,9 +51,18 @@ class Match(namedtuple("Match", ["width", "height"])):
     def __bool__(self):
         return self.width > 1
 
+
 class Roll:
+    """Class for One Roll Engine dice rolls."""
 
     def __init__(self, x=4, penalty=0, over10=False, limit_width=False):
+        """
+
+        :param x: py.int, representing number of dice to roll, or py.list of ints, representing dice values.
+        :param penalty: py.int of
+        :param over10:
+        :param limit_width:
+        """
         if type(x) not in [int, list]:
             raise TypeError("Int or list expected but {} given.".format(type(x)))
 

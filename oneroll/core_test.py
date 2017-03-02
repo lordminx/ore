@@ -1,4 +1,4 @@
-from ORE.core import *
+from oneroll.core import *
 import pytest
 
 
