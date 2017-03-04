@@ -4,7 +4,14 @@ from operator import itemgetter
 
 
 class Gobble:
+
     def __init__(self, w, h):
+        """
+        Represents a Match turned into gobble dice.
+
+        :param w: Width of the Match
+        :param h: Height of the Match
+        """
         self.width = w
         self.height = h
         self.gobbles = [h] * w
@@ -25,11 +32,25 @@ class Gobble:
 
 
 class Match(namedtuple("Match", ["width", "height"])):
+    """Class representing an ORE match.
+
+        >>> Match(3,7)
+        3x7
+        >>> match = Match(3,7)
+        >>> print(match.height)
+        7
+        >>> print(match.width)
+        3
+
+    :param width: Number of dice in Match
+    :param height: Die value of Match
+    """
     __slots__ = ()
 
     def __str__(self):
         return "{}x{}".format(self[0], self[1])
 
+    # Not pythonic, but allows for pretty printing of list of Match objects.
     __repr__ = __str__
 
     def to_gobble(self):
@@ -38,9 +59,30 @@ class Match(namedtuple("Match", ["width", "height"])):
     def __bool__(self):
         return self.width > 1
 
+
 class Roll:
+    """
+    Class for One Roll Engine dice rolls.
+
+        >>> default = Roll()
+        >>> len(default)
+        4
+        >>> specific = Roll([2, 2, 2, 3, 4, 5, 6, 6, ])
+        >>> specific.matches
+        [3x2, 2x6]
+        >>> specific.highest
+        2x6
+        >>> specific.widest
+        3x2
+
+    :param x: py.int, representing number of dice to roll, or py.list of ints, representing dice values.
+    :param penalty: py.int of penalty dice
+    :param over10: Allow rolling more than 10 dice.
+    :param limit_width: Limit width of oneroll.Match to maximum of 5.
+    """
 
     def __init__(self, x=4, penalty=0, over10=False, limit_width=False):
+
         if type(x) not in [int, list]:
             raise TypeError("Int or list expected but {} given.".format(type(x)))
 
@@ -68,12 +110,21 @@ class Roll:
 
     @property
     def matches(self):
+        """
+        Property method for retrieving a list of Matches in the Roll.
+
+        :return: Sorted list of Match objects, if any. Else an empty list.
+        """
         counter = Counter(self.dice)
 
         return sorted([Match(y, x) for x, y in counter.items() if y > 1], key=lambda item: item[1]) or []
 
     @property
     def waste(self):
+        """
+        Property function for retrieving waste dice, ie. die values that did not result in a Match.
+        :return: Sorted list of waste die values or an empty list.
+        """
         if len(self.matches) > 0:
             __waste = list(set(self.dice) - set([x[1] for x in self.matches]))
             return sorted(__waste)
@@ -82,6 +133,10 @@ class Roll:
 
     @property
     def highest(self):
+        """
+        Retrieve Match with largest Height.
+        :return: Match object of max Height; empty tuple of no Match in Roll.
+        """
         if self.matches:
             return max(self.matches, key=itemgetter(1))
         else:
@@ -89,6 +144,10 @@ class Roll:
 
     @property
     def widest(self):
+        """
+        Retrieve Match with max Width.
+        :return: Match object with most Width; empty tuple if no Match in Roll.
+        """
         if self.matches:
             _widest = max(self.matches, key=itemgetter(0))
 
@@ -112,6 +171,10 @@ class Roll:
             raise e
 
     def reroll_all(self):
+        """
+        Reroll all dice in Roll.
+        :return:
+        """
         number = len(self.dice)
         self.dice = Roll(number,
                          over10=self.over10,
@@ -145,6 +208,11 @@ class Roll:
     def __len__(self):
         return self.dice.__len__()
 
+    def __repr__(self):
+        return "Roll(x={}, over10={}, limit_width={})".format(self.dice, self.over10, self.limit_width)
+
+    def __str__(self):
+        return str(self.matches + self.waste)
 
 
 class Contest:

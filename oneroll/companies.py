@@ -1,3 +1,4 @@
+import os
 from collections import Counter
 from random import choice
 from textwrap import dedent
@@ -7,7 +8,7 @@ from .core import Roll
 
 class Corpus:
     def __init__(self):
-        self.nouns = self.loadwordfile("nouns.txt")
+        self.nouns = self.loadwordfile("./nouns.txt")
         self.adjectives = self.loadwordfile("adjectives.txt")
 
     @property
@@ -21,9 +22,12 @@ class Corpus:
     @staticmethod
     def loadwordfile(filename):
         words = []
-        with open(filename, "r") as f:
-            for line in f:
-                words.append(line.split()[0])
+        try:
+            with open(filename, "r") as f:
+                for line in f:
+                    words.append(line.split()[0])
+        except FileNotFoundError:
+            pass
         return words
 
     def randomname(self):
