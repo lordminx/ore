@@ -88,12 +88,13 @@ class Roll:
 
         self.over10 = over10
         self.limit_width = limit_width
+        self.penalty = penalty
 
         if type(x) == list:
             self.dice = sorted(x)
 
         else:
-            x -= penalty
+            x -= self.penalty
 
             if not over10 and x > 10:
                 x = min(x, 10)
@@ -182,6 +183,12 @@ class Roll:
                          ).dice
 
     def __eq__(self, other):
+        """
+        Overridden builtin method. Rolls are equal if their dice have the same value.
+
+        :param other: Roll object
+        :return: Bool
+        """
         return set(self.dice) == set(other.dice)
 
     def __ne__(self, other):
@@ -209,7 +216,21 @@ class Roll:
         return self.dice.__len__()
 
     def __repr__(self):
-        return "Roll(x={}, over10={}, limit_width={})".format(self.dice, self.over10, self.limit_width)
+
+        rep = list()
+
+        rep.append("x={}".format(self.dice))
+
+        if self.penalty:
+            rep.append("penalty={}".format(self.penalty))
+
+        if self.over10:
+            rep.append("over10=True")
+
+        if self.limit_width:
+            rep.append("limit_width=True")
+
+        return "Roll(" + ", ".join(rep) + ")"
 
     def __str__(self):
         return str(self.matches + self.waste)
