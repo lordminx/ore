@@ -85,7 +85,7 @@ They are also easily changeable:
     >>> fail.reroll(0)
     >>> fail.dice
     [9, 2, 3, 4, 4]     # Rerolled the 1 and got, for example, a 9 instead.
-    
+
 
 ## Contribution
 
