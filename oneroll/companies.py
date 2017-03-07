@@ -6,91 +6,7 @@ from textwrap import dedent
 from .core import Roll
 
 
-class Corpus:
-    def __init__(self):
-        self.nouns = self.loadwordfile("./nouns.txt")
-        self.adjectives = self.loadwordfile("adjectives.txt")
-
-    @property
-    def noun(self):
-        return choice(self.nouns)
-
-    @property
-    def adjective(self):
-        return choice(self.adjectives)
-
-    @staticmethod
-    def loadwordfile(filename):
-        words = []
-        try:
-            with open(filename, "r") as f:
-                for line in f:
-                    words.append(line.split()[0])
-        except FileNotFoundError:
-            pass
-        return words
-
-    def randomname(self):
-
-        return "The {} {}".format(self.adjective, self.noun.capitalize())
-
-
-class Company:
-    _stats = ["influence", "might", "sovereignty", "territory", "treasure"]
-
-    def __init__(self, name="Some Company", stats=(0, 0, 1, 0, 0), assets=[]):
-        self.name = name
-
-        self.influence = stats[0]
-        self.might = stats[1]
-        self.sovereignty = stats[2]
-        self.territory = stats[3]
-        self.treasure = stats[4]
-
-        self.assets = list(assets)
-
-        self.used = Counter()
-
-        self.roll = None
-
-    @property
-    def size(self):
-        _size = sum([getattr(self, x) for x in self._stats])
-        _size += len(self.assets)
-
-        return _size
-
-    @property
-    def stats(self):
-        return {stat:getattr(self, stat) for stat in Company._stats}
-
-    @property
-    def stats_tuple(self):
-        return tuple([getattr(self, stat) for stat in Company._stats])
-
-    def refresh(self):
-        """Clear stat usage Counter """
-        self.used.clear()
-
-    def __repr__(self):
-        return "Company(name={p.name}".format(p=self)
-
-    def __str__(self):
-        stringrep = """\
-                    {c.name}:
-
-                    Influence: {c.influence}
-                    Might: {c.might}
-                    Sovereignty: {c.sovereignty}
-                    Territory: {c.territory}
-                    Treasure: {c.treasure}
-
-                    Assets: {c.assets}"""
-
-        return dedent(stringrep).format(c=self)
-
-
-actions = {
+_actions = {
     "attack": (("might", "treasure"), ("might", "territory")),
     "being informed": (("influence", "sovereignty"), ("influence", "treasure")),
     "counter-espionage": (("influence", "territory"), ("influence", "treasure")),
@@ -104,7 +20,7 @@ actions = {
     }
 
 
-ORC_table = {
+_ORC_table = {
     1: {
         1: ["Oracle", ("influence", 1)],
         2: ["Gossipy Old Folks", ("influence", 1), ("assets", "Culture of Shame and Gossip")],
@@ -188,6 +104,114 @@ ORC_table = {
 }
 
 
+# TODO: Build better, more consistent corpus.
+class Corpus:
+    def __init__(self):
+        self.nouns = self.loadwordfile("./nouns.txt")
+        self.adjectives = self.loadwordfile("adjectives.txt")
+
+    @property
+    def noun(self):
+        return choice(self.nouns)
+
+    @property
+    def adjective(self):
+        return choice(self.adjectives)
+
+    @staticmethod
+    def loadwordfile(filename):
+        words = []
+        try:
+            with open(filename, "r") as f:
+                for line in f:
+                    words.append(line.split()[0])
+        except FileNotFoundError:
+            pass
+        return words
+
+    def randomname(self):
+
+        return "The {} {}".format(self.adjective, self.noun.capitalize())
+
+
+class Company:
+    """
+    Representation of Reign companies.
+    """
+    _stats = ["influence", "might", "sovereignty", "territory", "treasure"]
+
+    def __init__(self, name="Some Company", stats=(0, 0, 1, 0, 0), assets=[]):
+        """
+
+        :param name: The name of the company as String.
+        :param stats: Tuple of the companies stats in alphabetical order.
+        :param assets: List of company assets as strings.
+        """
+        self.name = name
+
+        self.influence = stats[0]
+        self.might = stats[1]
+        self.sovereignty = stats[2]
+        self.territory = stats[3]
+        self.treasure = stats[4]
+
+        self.assets = list(assets)
+
+        self.used = Counter()
+
+        self.roll = None
+
+    @property
+    def size(self):
+        """
+        The companies 'size' as a measure of stats + # of assets.
+        :return: int
+        """
+        _size = sum([getattr(self, x) for x in self._stats])
+        _size += len(self.assets)
+
+        return _size
+
+    @property
+    def stats(self):
+        """
+        Return companies stats as a {statname: value} dict.
+
+        :return: dict
+        """
+        return {stat:getattr(self, stat) for stat in Company._stats}
+
+    @property
+    def stats_tuple(self):
+        """
+        Return a tuple of the values of the companies stats.
+
+        :return: 5-Tuple of stat values
+        """
+        return tuple([getattr(self, stat) for stat in Company._stats])
+
+    def refresh(self):
+        """Clear stat usage Counter """
+        self.used.clear()
+
+    def __repr__(self):
+        return "Company(name={p.name}, stats={p.stats_tuple}, assets={p.assets}".format(p=self)
+
+    def __str__(self):
+        stringrep = """\
+                    {c.name}:
+
+                    Influence: {c.influence}
+                    Might: {c.might}
+                    Sovereignty: {c.sovereignty}
+                    Territory: {c.territory}
+                    Treasure: {c.treasure}
+
+                    Assets: {c.assets}"""
+
+        return dedent(stringrep).format(c=self)
+
+
 def onerollcompany(name="OneRollCompany", dice=15):
 
     company = Company(name, (0, 0, 1, 0, 0))
@@ -201,10 +225,10 @@ def onerollcompany(name="OneRollCompany", dice=15):
         width = match[0]
         height = match[1]
 
-        results.extend([ORC_table[height][x] for x in range(2, width +1)])
+        results.extend([_ORC_table[height][x] for x in range(2, width + 1)])
 
     # get Waste Die results
-    results += [ORC_table[die][1] for die in roll.waste]
+    results += [_ORC_table[die][1] for die in roll.waste]
     print("Processing Results")
     for res in results:
         for i in res:
@@ -212,9 +236,9 @@ def onerollcompany(name="OneRollCompany", dice=15):
                 pass  # maybe do something useful with those strings
             else:
                 if type(i[1]) == str:
-                    print(i)
+                    # print(i)
                     company.assets.append(i[1])
-                    print(len(company.assets))
+                    # print(len(company.assets))
                 else:
                     setattr(company, i[0], getattr(company, i[0]) + i[1])
     return company

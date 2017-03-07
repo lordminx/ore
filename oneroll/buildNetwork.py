@@ -42,9 +42,9 @@ if __name__ == "__main__":
 
 
     for x, y in network.edges():
-        # compare actions
+        # compare _actions
         print("'{}' vs '{}'".format(x.name, y.name))
-        for k, v in actions.items():
+        for k, v in _actions.items():
 
             if v[1]:
                 print(x.stats)

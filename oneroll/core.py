@@ -272,7 +272,11 @@ class Roll:
 
 
 class Contest:
+    """
+    Catch-all contest class.
 
+    TODO: This sooooooo needs better semantics. This is BAD.
+    """
     def __init__(self,
                  roll1,
                  roll2=None,
