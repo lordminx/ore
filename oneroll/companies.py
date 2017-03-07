@@ -1,4 +1,3 @@
-import os
 from collections import Counter
 from random import choice
 from textwrap import dedent
@@ -8,7 +7,7 @@ from .core import Roll
 
 _actions = {
     "attack": (("might", "treasure"), ("might", "territory")),
-    "being informed": (("influence", "sovereignty"), ("influence", "treasure")),
+    "being_informed": (("influence", "sovereignty"), ("influence", "treasure")),
     "counter-espionage": (("influence", "territory"), ("influence", "treasure")),
     "defend": (("might", "territory"), ("might", "treasure")),
     "espionage": (("influence", "treasure"), ("influence", "sovereignty")),
@@ -25,7 +24,7 @@ _ORC_table = {
         1: ["Oracle", ("influence", 1)],
         2: ["Gossipy Old Folks", ("influence", 1), ("assets", "Culture of Shame and Gossip")],
         3: ["Paid Network of Informants", ("influence", 1)],
-        4: ["Elite Secret Agents", ("influence",1)],
+        4: ["Elite Secret Agents", ("influence", 1)],
         5: ["Traitor", ("assets", "Mole")]
 
         },
@@ -134,6 +133,7 @@ class Corpus:
         return "The {} {}".format(self.adjective, self.noun.capitalize())
 
 
+# TODO: Build API for doing company actions.
 class Company:
     """
     Representation of Reign companies.
@@ -194,6 +194,28 @@ class Company:
         """Clear stat usage Counter """
         self.used.clear()
 
+    def do(self, stat1, stat2):
+        """
+        Roll for Company action.
+
+            >>> company = Company(stats=(2,2,2,2,2))
+            >>> roll = company.do("might", "treasure")     # roll for attack
+            >>> len(roll)
+            4
+
+        :param stat1: Stat name as String.
+        :param stat2: Stat name as String.
+        :return: Roll
+        """
+
+        _value1 = getattr(self, stat1) - self.used[stat1]
+        _value2 = getattr(self, stat2) - self.used[stat2]
+
+        self.used[stat1] += 1
+        self.used[stat2] += 1
+
+        return Roll(_value1 + _value2)
+
     def __repr__(self):
         return "Company(name={p.name}, stats={p.stats_tuple}, assets={p.assets}".format(p=self)
 
@@ -213,6 +235,13 @@ class Company:
 
 
 def onerollcompany(name="OneRollCompany", dice=15):
+    """
+    Generate a Company randomly.
+
+    :param name: Str of the companies name.
+    :param dice: Int of dice to roll for company generation.
+    :return: Company object.
+    """
 
     company = Company(name, (0, 0, 1, 0, 0))
     roll = Roll(dice, over10=True, limit_width=True)
