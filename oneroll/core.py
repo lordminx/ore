@@ -25,6 +25,23 @@ class Gobble:
         return str(self.gobbles)
 
     def __bool__(self):
+        """
+        Test for Truthiness based on remaining gobble dice.
+
+            >>> gobs = Gobble(2,6)
+            >>> len(gobs)
+            2
+            >>> gobs.use()
+            6
+            >>> bool(gobs)
+            True
+            >>> gobs.use()
+            6
+            >>> bool(gobs)
+            False
+
+        :return: True, while still gobble dice left.
+        """
         return bool(self.gobbles)
 
     def __len__(self):
@@ -54,6 +71,11 @@ class Match(namedtuple("Match", ["width", "height"])):
     __repr__ = __str__
 
     def to_gobble(self):
+        """
+        Turn a Match object into a Gobble object.
+
+        :return: Gobble object representation of this Match
+        """
         return Gobble(self.width, self.height)
 
     def __bool__(self):
@@ -195,6 +217,11 @@ class Roll:
         return not self == other
 
     def __add__(self, other):
+        """
+        Add one dice Roll to this.
+        :param other: Roll object to be added to this Roll.
+        :return: A new Roll object consisting of the dice results on self and other.
+        """
         try:
             new_dice = self.dice + other.dice
             over_10 = len(new_dice) > 10
@@ -216,6 +243,14 @@ class Roll:
         return self.dice.__len__()
 
     def __repr__(self):
+        """
+
+            >>> roll = Roll(6)
+            >>> roll == eval(roll.__repr__())
+            True
+
+        :return: Str representation of this Roll object.
+        """
 
         rep = list()
 
