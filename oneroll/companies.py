@@ -38,7 +38,9 @@ class Corpus:
 class Company:
     _stats = ["influence", "might", "sovereignty", "territory", "treasure"]
 
-    def __init__(self, name="Some Company", stats=(0, 0, 1, 0, 0), assets=[]):
+    def __init__(self, name="Some Company", stats=(0, 0, 1, 0, 0), assets=None):
+        if assets is None:
+            assets = []
         self.name = name
 
         self.influence = stats[0]
