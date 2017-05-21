@@ -314,9 +314,6 @@ class Contest:
         return self.winner
 
 
-
-
-
 def static_contest(roll, diff=1, penalty=0):
     if type(roll) == int:
         roll = Roll(roll)

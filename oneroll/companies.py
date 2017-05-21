@@ -140,7 +140,7 @@ class Company:
     """
     _stats = ["influence", "might", "sovereignty", "territory", "treasure"]
 
-    def __init__(self, name="Some Company", stats=(0, 0, 1, 0, 0), assets=[]):
+    def __init__(self, name="Some Company", stats=(0, 0, 1, 0, 0), assets=None):
         """
 
         :param name: The name of the company as String.
@@ -155,6 +155,8 @@ class Company:
         self.territory = stats[3]
         self.treasure = stats[4]
 
+        if not assets:
+            assets = []
         self.assets = list(assets)
 
         self.used = Counter()
