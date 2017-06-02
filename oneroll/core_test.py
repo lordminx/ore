@@ -2,6 +2,9 @@ from oneroll.core import *
 import pytest
 
 
+class TestGobble:
+    """Tests for the Gobble class"""
+
 class TestRoll:
     """Tests for the Roll class."""
 
@@ -10,6 +13,7 @@ class TestRoll:
 
         with pytest.raises(TypeError) as exinfo:
             Roll("string")
+        with pytest.raises(TypeError) as exinfo:
             Roll(("Tuple", 12))
 
         assert "Int or list expected" in str(exinfo.value)

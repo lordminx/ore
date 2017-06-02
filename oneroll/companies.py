@@ -1,8 +1,9 @@
 from collections import Counter
 from random import choice
 from textwrap import dedent
+import tracery
 
-from .core import Roll
+from oneroll.core import Roll
 
 
 _actions = {
@@ -131,6 +132,16 @@ class Corpus:
     def randomname(self):
 
         return "The {} {}".format(self.adjective, self.noun.capitalize())
+
+    def tracery_name(self):
+        rules = {"origin": "The #adjective# #noun#"}
+
+        rules["adjective"] = self.adjectives
+        rules["noun"] = self.nouns
+
+        grammar = tracery.Grammar(rules)
+
+        return grammar.flatten("#origin#")
 
 
 # TODO: Build API for doing company actions.
@@ -276,5 +287,6 @@ def onerollcompany(name="OneRollCompany", dice=15):
 
 
 if __name__ == "__main__":
-    #print(Company()
+    foo = Corpus()
+    print(foo.tracery_name())
     pass
